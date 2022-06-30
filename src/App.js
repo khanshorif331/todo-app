@@ -1,13 +1,21 @@
 import logo from './logo.svg'
 import './App.css'
 import Navbar from './shared/Navbar'
+import { Routes, Route } from 'react-router-dom'
+import ToDo from './pages/ToDo/ToDo'
+import Completed from './pages/Completed/Completed'
+import Calender from './pages/Calender/Calender'
 
 function App() {
 	return (
 		<div className='App'>
 			<Navbar></Navbar>
-			{/* <h1 className='text-2xl font-bold'>Hello Beautifull people!!</h1>
-			<button class='btn btn-primary'>Button</button> */}
+			<Routes>
+				<Route path='/' element={<ToDo></ToDo>}></Route>
+				<Route path='/ToDo' element={<ToDo></ToDo>}></Route>
+				<Route path='/completed' element={<Completed></Completed>}></Route>
+				<Route path='/calender' element={<Calender></Calender>}></Route>
+			</Routes>
 		</div>
 	)
 }

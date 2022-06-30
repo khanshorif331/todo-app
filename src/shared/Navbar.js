@@ -1,17 +1,18 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom'
 
 const Navbar = () => {
 	const navigation = (
 		<>
 			<li>
-				<a>Item 1</a>
+				<a>Completed</a>
 			</li>
 			<li>
-				<a>Item 2</a>
+				<a>ToDo</a>
 			</li>
 
 			<li>
-				<a>Item 3</a>
+				<a>Calender</a>
 			</li>
 		</>
 	)
