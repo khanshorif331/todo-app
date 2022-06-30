@@ -1,5 +1,5 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, Link } from 'react-router-dom'
 
 const Navbar = () => {
 	const navigation = (
@@ -19,6 +19,7 @@ const Navbar = () => {
 	return (
 		<div>
 			<div className='navbar bg-base-100'>
+				{/* for mobile */}
 				<div className='navbar-start'>
 					<div className='dropdown'>
 						<label tabIndex='0' className='btn btn-ghost lg:hidden'>
@@ -44,13 +45,21 @@ const Navbar = () => {
 							{navigation}
 						</ul>
 					</div>
-					<a className='btn btn-ghost normal-case text-2xl'>TODO</a>
+					<NavLink
+						to='/todo'
+						className='btn btn-ghost normal-case text-2xl'
+					>
+						MY TODOS
+					</NavLink>
 				</div>
+				{/* for tab or pc */}
 				<div className='navbar-center hidden lg:flex'>
 					<ul className='menu menu-horizontal p-0'>{navigation}</ul>
 				</div>
 				<div className='navbar-end'>
-					<a className='btn'>Get started</a>
+					<NavLink to='/login' className='btn'>
+						LOGIN
+					</NavLink>
 				</div>
 			</div>
 		</div>
