@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import {
+	useAuthState,
 	useSignInWithEmailAndPassword,
 	useSignInWithGoogle,
 } from 'react-firebase-hooks/auth'
@@ -17,6 +18,25 @@ const Login = () => {
 		formState: { errors },
 		handleSubmit,
 	} = useForm()
+	// const [authUser] = useAuthState(auth)
+	useEffect(() => {
+		const email = user?.user?.email || gUser?.user?.email
+		const currentUser = { email: email }
+		console.log('email', email)
+		if (email) {
+			fetch(`http://localhost:5000/user/${email}`, {
+				method: 'PUT',
+				headers: {
+					'content-type': 'application/json',
+				},
+				body: JSON.stringify(currentUser),
+			})
+				.then(res => res.json())
+				.then(data => {
+					console.log(data)
+				})
+		}
+	}, [user, gUser])
 
 	let navigate = useNavigate()
 	let location = useLocation()
@@ -28,6 +48,7 @@ const Login = () => {
 		signInWithEmailAndPassword(data.email, data.password)
 	}
 	if (user || gUser) {
+		console.log(user?.user?.email || gUser?.user?.email)
 		navigate(from, { replace: true })
 	}
 	if (loading || gLoading) {
