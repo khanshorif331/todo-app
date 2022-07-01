@@ -22,7 +22,7 @@ const Login = () => {
 	useEffect(() => {
 		const email = user?.user?.email || gUser?.user?.email
 		const currentUser = { email: email }
-		console.log('email', email)
+
 		if (email) {
 			fetch(`http://localhost:5000/user/${email}`, {
 				method: 'PUT',
