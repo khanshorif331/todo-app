@@ -6,9 +6,8 @@ import {
 } from 'react-firebase-hooks/auth'
 import auth from '../../firebase.init'
 import { useForm } from 'react-hook-form'
-// import Loading from '../Shared/Loading'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-// import useToken from '../../hooks/useToken'
+import Loading from '../../shared/Loading'
 
 const Signup = () => {
 	const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth)
@@ -17,7 +16,6 @@ const Signup = () => {
 		useCreateUserWithEmailAndPassword(auth)
 
 	const [updateProfile, updating, updateError] = useUpdateProfile(auth)
-	// const [token] = useToken(user || gUser)
 
 	const navigate = useNavigate()
 	const location = useLocation()
@@ -35,15 +33,10 @@ const Signup = () => {
 		await createUserWithEmailAndPassword(data.email, data.password)
 		await updateProfile({ displayName: data.name })
 	}
-	// useEffect(() => {
-	// 	if (token) {
-	// 		navigate(from, { replace: true })
-	// 	}
-	// }, [token, from, navigate])
 
-	// if (loading || gLoading || updating) {
-	// 	return <Loading></Loading>
-	// }
+	if (loading || gLoading || updating) {
+		return <Loading></Loading>
+	}
 	if (user || gUser) {
 		navigate(from, { replace: true })
 	}
@@ -157,7 +150,7 @@ const Signup = () => {
 						{signInError}
 
 						<input
-							className='btn w-full max-w-xs text-black hover:text-white'
+							className='btn w-full max-w-xs  hover:text-white'
 							type='submit'
 							value='Sign Up'
 						/>
