@@ -4,6 +4,7 @@ import { useQuery } from 'react-query'
 import { toast } from 'react-toastify'
 import auth from '../../firebase.init'
 import Loading from '../../shared/Loading'
+import TodoItem from '../../pages/ToDo/TodoItem'
 
 const ToDo = () => {
 	const [user] = useAuthState(auth)
@@ -63,7 +64,16 @@ const ToDo = () => {
 				<input className='btn' type='submit' value='Add Task' />
 			</form>
 			{isLoading && <Loading></Loading>}
-			<div>{data && <p>{data.length}</p>}</div>
+			<div>
+				{data &&
+					// <p>{data.length}</p>
+					data.map(item => (
+						<TodoItem key={item._id} item={item}></TodoItem>
+						// <ul>
+						// 	<li>{data.todo}</li>
+						// </ul>
+					))}
+			</div>
 		</div>
 	)
 }
