@@ -1,20 +1,31 @@
 import React, { useEffect, useState } from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import auth from '../../firebase.init'
+import Loading from '../../shared/Loading'
 
 const Completed = () => {
 	const [user] = useAuthState(auth)
 	const [myTodo, setMyTodo] = useState([])
+	const [loading, setLoading] = useState(true)
+	// setLoading(true)
 	useEffect(() => {
-		fetch(`http://localhost:5000/myTodo/${user?.email}`)
+		fetch(
+			`https://todo-app-server-public.herokuapp.com/myTodo/${user?.email}`
+		)
 			.then(res => res.json())
 			.then(data => setMyTodo(data))
+		setLoading(false)
 	}, [user])
+
+	// if (loading) {
+	// 	return <p>Hello loadign</p>
+	// }
 	return (
 		<div className='w-full'>
 			<h1 className='text-center font-bold text-2xl'>
 				Total Completed Task : {myTodo.length}
 			</h1>
+			{loading && <button class='btn loading'>loading</button>}
 			<div className='w-full'>
 				{myTodo.map(item => (
 					<div

@@ -10,7 +10,7 @@ const TodoItem = ({ item, refetch }) => {
 	const handleComplete = (e, _id) => {
 		let isChecked = e.target.checked
 		setComplete(isChecked)
-		fetch(`http://localhost:5000/todo/${_id}`, {
+		fetch(`https://todo-app-server-public.herokuapp.com/todo/${_id}`, {
 			method: 'PUT',
 			headers: {
 				'content-type': 'application/json',
@@ -19,13 +19,16 @@ const TodoItem = ({ item, refetch }) => {
 			.then(res => res.json())
 			.then(data => {
 				if (data.modifiedCount > 0) {
-					fetch(`http://localhost:5000/completed/${_id}`, {
-						method: 'POST',
-						headers: {
-							'content-type': 'application/json',
-						},
-						body: JSON.stringify(item),
-					})
+					fetch(
+						`https://todo-app-server-public.herokuapp.com/completed/${_id}`,
+						{
+							method: 'POST',
+							headers: {
+								'content-type': 'application/json',
+							},
+							body: JSON.stringify(item),
+						}
+					)
 						.then(res => res.json())
 						.then(data => refetch())
 				}
