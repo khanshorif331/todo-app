@@ -51,6 +51,7 @@ const ToDo = () => {
 					toast('Task added successfully')
 				}
 			})
+		e.target.reset()
 	}
 	return (
 		<div className='w-full'>
@@ -68,7 +69,11 @@ const ToDo = () => {
 				{data &&
 					// <p>{data.length}</p>
 					data.map(item => (
-						<TodoItem key={item._id} item={item}></TodoItem>
+						<TodoItem
+							key={item._id}
+							item={item}
+							refetch={refetch}
+						></TodoItem>
 						// <ul>
 						// 	<li>{data.todo}</li>
 						// </ul>
