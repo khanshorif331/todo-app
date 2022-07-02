@@ -5,10 +5,31 @@ import withReactContent from 'sweetalert2-react-content'
 const TodoItem = ({ item, refetch }) => {
 	const MySwal = withReactContent(Swal)
 	const [complete, setComplete] = useState(false)
+
+	// handle completed button
 	const handleComplete = (e, _id) => {
 		let isChecked = e.target.checked
 		setComplete(isChecked)
-		console.log(_id, isChecked)
+		fetch(`http://localhost:5000/todo/${_id}`, {
+			method: 'PUT',
+			headers: {
+				'content-type': 'application/json',
+			},
+		})
+			.then(res => res.json())
+			.then(data => {
+				if (data.modifiedCount > 0) {
+					fetch(`http://localhost:5000/completed/${_id}`, {
+						method: 'POST',
+						headers: {
+							'content-type': 'application/json',
+						},
+						body: JSON.stringify(item),
+					})
+						.then(res => res.json())
+						.then(data => refetch())
+				}
+			})
 	}
 
 	// handling delete
@@ -47,7 +68,8 @@ const TodoItem = ({ item, refetch }) => {
 			{/* <p>Name:{item.todo}</p> */}
 			<div className='form-control'>
 				<label className='label cursor-pointer'>
-					{complete ? (
+					{/* complete */}
+					{item.status === 'completed' ? (
 						<strike className='label-text text-xl'>
 							{item.todo}
 							<div className='badge badge-primary'>completed</div>{' '}
@@ -65,6 +87,7 @@ const TodoItem = ({ item, refetch }) => {
 					<input
 						type='checkbox'
 						name='complete'
+						disabled={item.status === 'completed'}
 						onChange={e => handleComplete(e, item._id)}
 						className='checkbox checkbox-primary'
 					/>
