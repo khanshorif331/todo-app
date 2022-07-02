@@ -9,7 +9,7 @@ import TodoItem from '../../pages/ToDo/TodoItem'
 const ToDo = () => {
 	const [user] = useAuthState(auth)
 	const email = user?.email
-	const url = `http://localhost:5000/todos/${email}`
+	const url = `https://todo-app-server-public.herokuapp.com/todos/${email}`
 
 	const { isLoading, data, refetch } = useQuery('todoData', () =>
 		fetch(url, {
@@ -37,7 +37,7 @@ const ToDo = () => {
 			status: 'pending',
 		}
 
-		fetch('http://localhost:5000/todo', {
+		fetch('https://todo-app-server-public.herokuapp.com/todo', {
 			method: 'POST',
 			headers: {
 				'content-type': 'application/json',
@@ -60,7 +60,7 @@ const ToDo = () => {
 					type='text'
 					name='todo'
 					placeholder='Type here'
-					class='input input-bordered input-primary w-full max-w-xs'
+					className='input input-bordered input-primary w-full max-w-xs'
 				/>
 				<input className='btn' type='submit' value='Add Task' />
 			</form>

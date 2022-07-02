@@ -24,7 +24,7 @@ const Login = () => {
 		const currentUser = { email: email }
 
 		if (email) {
-			fetch(`http://localhost:5000/user/${email}`, {
+			fetch(`https://todo-app-server-public.herokuapp.com/user/${email}`, {
 				method: 'PUT',
 				headers: {
 					'content-type': 'application/json',
