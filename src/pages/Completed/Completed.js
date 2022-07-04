@@ -13,19 +13,22 @@ const Completed = () => {
 			`https://todo-app-server-public.herokuapp.com/myTodo/${user?.email}`
 		)
 			.then(res => res.json())
-			.then(data => setMyTodo(data))
-		setLoading(false)
+			.then(data => {
+				setMyTodo(data)
+				setLoading(false)
+			})
 	}, [user])
 
-	// if (loading) {
-	// 	return <p>Hello loadign</p>
-	// }
+	if (loading) {
+		return <Loading></Loading>
+	}
+
 	return (
 		<div className='w-full'>
 			<h1 className='text-center font-bold text-2xl'>
 				Total Completed Task : {myTodo.length}
 			</h1>
-			{loading && <button class='btn loading'>loading</button>}
+			{loading && <button className='btn loading'>loading</button>}
 			<div className='w-full'>
 				{myTodo.map(item => (
 					<div
@@ -33,12 +36,12 @@ const Completed = () => {
 						className='mx-auto w-full md:w-1/2 my-6 h-16 rounded-lg shadow-md px-4 hover:outline flex items-center justify-between text-xl'
 					>
 						{item.todo}
-						<div class='badge badge-success gap-2'>
+						<div className='badge badge-success gap-2'>
 							<svg
 								xmlns='http://www.w3.org/2000/svg'
 								fill='none'
 								viewBox='0 0 24 24'
-								class='inline-block w-4 h-4 stroke-current'
+								className='inline-block w-4 h-4 stroke-current'
 							>
 								<path
 									stroke-linecap='round'

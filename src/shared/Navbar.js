@@ -1,7 +1,7 @@
 import { signOut } from 'firebase/auth'
 import React from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth'
-import { NavLink, Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import auth from '../firebase.init'
 
 const Navbar = () => {
@@ -25,7 +25,7 @@ const Navbar = () => {
 	}
 	return (
 		<div>
-			<div className='navbar bg-base-100'>
+			<div className='navbar bg-base-200 mb-6'>
 				{/* for mobile */}
 				<div className='navbar-start'>
 					<div className='dropdown'>

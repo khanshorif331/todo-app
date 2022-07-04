@@ -10,15 +10,38 @@ import Signup from './pages/Login/Signup'
 import { ToastContainer } from 'react-toastify'
 import ResetPassword from './pages/Login/ResetPassword'
 import 'react-toastify/dist/ReactToastify.css'
+import RequireAuth from './pages/Login/RequireAuth'
+import Footer from './shared/Footer'
 
 function App() {
 	return (
 		<div className='App'>
 			<Navbar></Navbar>
 			<Routes>
-				<Route path='/' element={<ToDo></ToDo>}></Route>
-				<Route path='/ToDo' element={<ToDo></ToDo>}></Route>
-				<Route path='/completed' element={<Completed></Completed>}></Route>
+				<Route
+					path='/'
+					element={
+						<RequireAuth>
+							<ToDo></ToDo>
+						</RequireAuth>
+					}
+				></Route>
+				<Route
+					path='/ToDo'
+					element={
+						<RequireAuth>
+							<ToDo></ToDo>
+						</RequireAuth>
+					}
+				></Route>
+				<Route
+					path='/completed'
+					element={
+						<RequireAuth>
+							<Completed></Completed>
+						</RequireAuth>
+					}
+				></Route>
 				<Route path='/calender' element={<Calender></Calender>}></Route>
 				<Route path='login' element={<Login></Login>}></Route>
 				<Route path='signup' element={<Signup></Signup>}></Route>
@@ -27,6 +50,7 @@ function App() {
 					element={<ResetPassword></ResetPassword>}
 				></Route>
 			</Routes>
+			<Footer></Footer>
 			<ToastContainer></ToastContainer>
 		</div>
 	)

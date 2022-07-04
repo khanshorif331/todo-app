@@ -1,10 +1,33 @@
 import React, { useState } from 'react'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
+import { toast } from 'react-toastify'
+import Loading from '../../shared/Loading'
 
 const TodoItem = ({ item, refetch }) => {
+	// sweet alert
 	const MySwal = withReactContent(Swal)
 	const [complete, setComplete] = useState(false)
+	const [editButton, setEditButton] = useState(false)
+
+	// handle update
+	const handleUpdate = (e, _id) => {
+		let updatedValue = e.target.value
+		fetch(`https://todo-app-server-public.herokuapp.com/todo/update/${_id}`, {
+			method: 'PUT',
+			headers: {
+				'content-type': 'application/json',
+			},
+			body: JSON.stringify({ todo: updatedValue }),
+		})
+			.then(res => res.json())
+			.then(data => {
+				if (data.modifiedCount > 0) {
+					refetch()
+					toast('Congratulations!Todo updated successfully!')
+				}
+			})
+	}
 
 	// handle completed button
 	const handleComplete = (e, _id) => {
@@ -66,11 +89,18 @@ const TodoItem = ({ item, refetch }) => {
 		})
 	}
 
+	const handleEditButton = id => {
+		setEditButton(!editButton)
+		if (!editButton) {
+			toast('Please click on the text to edit!!')
+		}
+	}
+
 	return (
 		<div className='mx-auto w-full md:w-1/2 my-6 h-16 rounded-lg shadow-md px-4 hover:outline'>
 			{/* <p>Name:{item.todo}</p> */}
 			<div className='form-control'>
-				<label className='label cursor-pointer'>
+				<div className='label cursor-pointer'>
 					{/* complete */}
 					{item.status === 'completed' ? (
 						<strike className='label-text text-xl'>
@@ -78,7 +108,14 @@ const TodoItem = ({ item, refetch }) => {
 							<div className='badge badge-primary'>completed</div>{' '}
 						</strike>
 					) : (
-						<span className='label-text text-xl'>{item.todo}</span>
+						<input
+							onBlur={e => handleUpdate(e, item._id)}
+							type='text'
+							name='update'
+							defaultValue={item.todo}
+							// defavalue={item.todo}
+							className='label-text text-xl'
+						></input>
 					)}
 					<button
 						onClick={e => handleDelete(e, item._id)}
@@ -86,7 +123,13 @@ const TodoItem = ({ item, refetch }) => {
 					>
 						Delete
 					</button>
-					<button className='btn btn-xs'>Edit</button>
+					<button
+						onClick={() => handleEditButton(item._id)}
+						className='btn btn-xs'
+						disabled={item.status === 'completed'}
+					>
+						{editButton ? 'Update' : 'Edit'}
+					</button>
 					<input
 						type='checkbox'
 						name='complete'
@@ -94,7 +137,7 @@ const TodoItem = ({ item, refetch }) => {
 						onChange={e => handleComplete(e, item._id)}
 						className='checkbox checkbox-primary'
 					/>
-				</label>
+				</div>
 			</div>
 		</div>
 	)
